@@ -171,14 +171,10 @@ class BaseRequest:
         # make sure the __repr__ even works if the request was created
         # from an invalid WSGI environment.  If we display the request
         # in a debug session we don't want the repr to blow up.
-        args = []
         try:
-            args.append(f"'{self.url}'")
-            args.append(f"[{self.method}]")
+            return f"<{type(self).__name__} '{self.url}' [{self.method}]"  
         except Exception:
-            args.append("(invalid WSGI environ)")
-
-        return f"<{type(self).__name__} {' '.join(args)}>"
+            return f"<{type(self).__name__} (invalid WSGI environ)>"
 
     @property
     def url_charset(self) -> str:
